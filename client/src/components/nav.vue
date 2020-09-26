@@ -2,32 +2,26 @@
     <nav>
         <ul>
             <li class="home"><router-link to="/Music">Home</router-link></li>
-            <li ><router-link v-if="!test" to="/Register">Register</router-link></li>
-            <li ><button v-if="test" @click="logout()">Logout</button></li>
-            <li><router-link v-if="!test" to="/Login">Login</router-link></li>
-            <li>{{test}}</li>
+            <li ><router-link v-if="!LogedIn" to="/Register">Register</router-link></li>
+            <li ><button v-if="LogedIn" @click="logout()">Logout</button></li>
+            <li><router-link v-if="!LogedIn" to="/Login">Login</router-link></li>
+            
         </ul>
     </nav>
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
 
     methods:{
         logout:function() {
-             localStorage.clear();
-             this.$router.push("/Login");
+           this.$store.dispatch("logout");
         }
     },
     computed:{
-        test:function(){
-            this.$store.commit("TEST_TOKEN",localStorage.getItem("token"))
-            return  this.$store.state.LogedIn;
-        }
+         ...mapState(["LogedIn"])  
     },
-    updated(){
-      
-    }
 }
 </script>
 

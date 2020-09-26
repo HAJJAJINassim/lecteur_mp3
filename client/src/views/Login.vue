@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 export default {
   data: function (){
         return {
@@ -27,15 +26,9 @@ export default {
         }
     },
     methods:{
-      login(){
-          axios.post("http://localhost:3000/user/login",{email:this.email,password:this.password}).
-          then(res=>{
-              if(res.status=="200"){
-                localStorage.setItem('token', res.data.token);
-                this.$router.push("/Music");
-              }
-          });
-      }
+     login(){
+       this.$store.dispatch('login',{email:this.email,password:this.password});
+     }
     }
 }
 </script>
